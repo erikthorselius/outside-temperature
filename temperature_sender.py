@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import zmq, json, sys, sched, time, urllib2, signal, os, logging
+import zmq, json, sys, sched, time, signal, os, logging, urllib.request
 from datetime import datetime, timedelta
 
 api_url = os.getenv('OUTSIDE_API_URL')
@@ -41,7 +41,8 @@ class TempSensor:
     return datetime.now() < date < (datetime.now() + timedelta(hours=1))
 
   def __get_data_from_api(self):
-    return json.load(urllib2.urlopen(api_url))
+    response = urllib.request.urlopen(api_url).read()
+    return json.loads(response.decode('utf-8'))
 
   def __get_nearest_item(self, forcast):
     return next(item['t'] for item in forcast if self.__is_within_hour(item))

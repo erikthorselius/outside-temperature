@@ -14,3 +14,6 @@ ExecStart=/usr/bin/docker run --rm --name outside-temperature \
   -e OUTSIDE_REPORT_TIME=1800 \
 	regius/outside-temperature
 ExecStop=/usr/bin/docker stop outside-temperature
+
+[Install]
+WantedBy=local.target

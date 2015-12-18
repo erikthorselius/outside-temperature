@@ -9,5 +9,5 @@ socket.bind(socket_address)
 
 while True: 
   result = socket.recv_json()
-  print result
+  print(result)
 
