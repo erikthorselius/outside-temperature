@@ -1,0 +1,16 @@
+[Unit]
+Description=Run Outside temperature service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=60s
+ExecStartPre=-/usr/bin/docker kill outside-temperature
+ExecStartPre=-/usr/bin/docker rm outside-temperature
+ExecStartPre=/usr/bin/docker pull regius/outside-temperature
+ExecStart=/usr/bin/docker run --rm --name outside-temperature \
+  -e OUTSIDE_SOCKET=tcp://192.168.1.3:2120 \
+  -e OUTSIDE_API_URL=http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/version/1/geopoint/lat/59.310817/lon/17.888756/data.json \
+  -e OUTSIDE_REPORT_TIME=1800 \
+	regius/outside-temperature
+ExecStop=/usr/bin/docker stop outside-temperature
