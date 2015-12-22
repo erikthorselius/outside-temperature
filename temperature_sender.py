@@ -35,6 +35,7 @@ class TempSensor:
       self.dict = {}
       self.dict['name'] = name
       self.dict['type'] = 'external_api'
+      self.dict['sensor'] = 'temperature'
 
   def __is_within_hour(self, item): 
     date = datetime.strptime(item['validTime'], "%Y-%m-%dT%H:%M:%SZ")
