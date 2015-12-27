@@ -4,13 +4,13 @@ from datetime import datetime, timedelta
 
 api_url = os.getenv('OUTSIDE_API_URL')
 report_time = float(os.getenv('OUTSIDE_REPORT_TIME', 3600))
-socket_address = os.getenv('OUTSIDE_SOCKET')
+socket_address = os.getenv('OUTSIDE_SOCKET').strip()
 logging.basicConfig(format='%(asctime)s %(message)s',level=logging.DEBUG)
 
 context = zmq.Context()
 socket = context.socket(zmq.PUSH)
-logging.info('Connected to address %s',socket_address)
 socket.connect(socket_address)
+logging.info('Connected to address %s',socket_address)
 s = sched.scheduler(time.time, time.sleep)
 
 def signal_handler(signal, frame):
